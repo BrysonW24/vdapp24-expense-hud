@@ -69,7 +69,7 @@ src/
 └── types/                # TypeScript types
 ```
 
-
+![alt text](image.png)
 
 ## License
 
