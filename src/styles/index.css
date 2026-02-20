@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand: #FF6B35;
+  --color-brand-dark: #e55a24;
+  --color-charcoal: #1A1A2E;
+  --color-charcoal-light: #2a2a4e;
+  --color-cream: #FAF7F2;
+}
+
+@layer base {
+  html, body, #root {
+    min-height: 100%;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    @apply bg-gray-50 text-gray-900;
+  }
+  .dark body, body.dark {
+    background-color: #0f172a;
+    color: #f1f5f9;
+  }
+  /* Apply dark bg to root element too */
+  .dark {
+    background-color: #0f172a;
+    color-scheme: dark;
+  }
+  :root {
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+@layer components {
+  .hud-card {
+    @apply bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-white/10;
+  }
+  .bottom-nav-safe {
+    padding-bottom: max(0.75rem, var(--safe-area-inset-bottom));
+  }
+  .amount-positive { @apply text-emerald-600 dark:text-emerald-400; }
+  .amount-negative { @apply text-red-500 dark:text-red-400; }
+}
