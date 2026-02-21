@@ -19,6 +19,7 @@ export default defineConfig({
           'vendor-db': ['dexie', 'dexie-react-hooks'],
           'vendor-utils': ['date-fns', 'papaparse', 'zustand'],
           'vendor-d3': ['d3'],
+          'vendor-supabase': ['@supabase/supabase-js'],
         },
       },
     },

@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom'
 import {
-  LayoutDashboard, List, Upload, TrendingUp, Settings, Wallet,
-  Sun, Moon, Monitor, PieChart, Home, BarChart2, Flame, CreditCard, Layers, Eye
+  LayoutDashboard, List, Upload, TrendingUp, Wallet,
+  PieChart, Home, BarChart2, Flame, CreditCard, Layers, Eye,
+  Cloud, CloudOff, Loader2, Sparkles
 } from 'lucide-react'
 import { clsx } from 'clsx'
-import { useTheme } from '@/hooks/useTheme'
+import { useSyncStatus } from '@/hooks/useSyncContext'
 
 const NAV_SECTIONS = [
   {
@@ -32,28 +33,10 @@ const NAV_SECTIONS = [
       { to: '/insights', icon: TrendingUp, label: 'Insights', exact: false },
     ],
   },
-  {
-    label: 'Explore',
-    items: [
-      { to: '/visualizations', icon: Eye, label: 'Visualizations', exact: false },
-    ],
-  },
-  {
-    label: null,
-    items: [
-      { to: '/settings', icon: Settings, label: 'Settings', exact: false },
-    ],
-  },
-]
-
-const THEME_OPTIONS = [
-  { value: 'light' as const, icon: Sun, label: 'Light' },
-  { value: 'dark' as const, icon: Moon, label: 'Dark' },
-  { value: 'system' as const, icon: Monitor, label: 'Auto' },
 ]
 
 export function Sidebar() {
-  const { theme, setTheme } = useTheme()
+  const { syncState, lastSynced } = useSyncStatus()
 
   return (
     <aside className="hidden lg:flex flex-col w-60 bg-white dark:bg-slate-900 border-r border-gray-100 dark:border-slate-700 h-screen sticky top-0">
@@ -102,26 +85,87 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Theme toggle */}
-      <div className="px-3 py-4 border-t border-gray-100 dark:border-slate-700">
-        <p className="text-[10px] text-gray-400 uppercase tracking-wide font-medium mb-2 px-1">Theme</p>
-        <div className="flex bg-gray-100 dark:bg-slate-800 rounded-xl p-1 gap-1">
-          {THEME_OPTIONS.map(({ value, icon: Icon, label }) => (
-            <button
-              key={value}
-              onClick={() => setTheme(value)}
-              title={label}
-              className={clsx(
-                'flex-1 flex items-center justify-center py-1.5 rounded-lg transition-colors',
-                theme === value
-                  ? 'bg-white dark:bg-slate-600 text-brand shadow-sm'
-                  : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
-              )}
-            >
-              <Icon size={14} />
-            </button>
-          ))}
-        </div>
+      {/* Visualizations standout */}
+      <div className="px-3 pb-3">
+        <NavLink
+          to="/visualizations"
+          className={({ isActive }) =>
+            clsx(
+              'group relative block rounded-xl overflow-hidden transition-all',
+              isActive
+                ? 'bg-gradient-to-br from-brand to-orange-600 shadow-lg shadow-brand/25'
+                : 'bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-800 dark:to-slate-900 hover:from-brand/90 hover:to-orange-600/90 hover:shadow-lg hover:shadow-brand/20'
+            )
+          }
+        >
+          {({ isActive }) => (
+            <div className="relative px-4 py-3">
+              {/* Decorative dots */}
+              <div className="absolute inset-0 opacity-10">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-1 h-1 rounded-full bg-white animate-pulse"
+                    style={{
+                      right: `${10 + i * 14}%`,
+                      top: `${20 + (i % 3) * 25}%`,
+                      animationDelay: `${i * 0.3}s`,
+                    }}
+                  />
+                ))}
+              </div>
+
+              <div className="relative flex items-center gap-3">
+                <div className={clsx(
+                  'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
+                  isActive ? 'bg-white/20' : 'bg-brand/20'
+                )}>
+                  <Sparkles size={15} className={isActive ? 'text-white' : 'text-brand'} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className={clsx(
+                      'text-sm font-semibold',
+                      isActive ? 'text-white' : 'text-white'
+                    )}>
+                      Visualizations
+                    </span>
+                    <span className={clsx(
+                      'text-[9px] font-bold px-1.5 py-0.5 rounded-full',
+                      isActive ? 'bg-white/20 text-white' : 'bg-brand/20 text-brand'
+                    )}>
+                      22
+                    </span>
+                  </div>
+                  <p className={clsx(
+                    'text-[10px] mt-0.5',
+                    isActive ? 'text-white/70' : 'text-gray-400'
+                  )}>
+                    Interactive gallery
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </NavLink>
+      </div>
+
+      {/* Sync status */}
+      <div className="px-4 py-3 border-t border-gray-100 dark:border-slate-700 flex items-center gap-2">
+        {syncState === 'syncing' ? (
+          <Loader2 size={12} className="text-brand animate-spin" />
+        ) : syncState === 'offline' ? (
+          <CloudOff size={12} className="text-gray-400" />
+        ) : (
+          <Cloud size={12} className="text-green-500" />
+        )}
+        <span className="text-[10px] text-gray-400">
+          {syncState === 'syncing' ? 'Syncing...' :
+           syncState === 'offline' ? 'Offline' :
+           syncState === 'error' ? 'Sync error' :
+           lastSynced ? `Synced ${lastSynced.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` :
+           'Cloud sync'}
+        </span>
       </div>
     </aside>
   )

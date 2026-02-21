@@ -1,4 +1,20 @@
-export interface Transaction {
+// Sync metadata — added to all syncable entities
+export type SyncStatus = 'synced' | 'pending' | 'conflict'
+
+export interface SyncMeta {
+  remoteId?: string | null   // Supabase UUID
+  _syncStatus?: SyncStatus
+}
+
+// Delete queue entry for offline deletes
+export interface DeleteQueueEntry {
+  id?: number
+  tableName: string
+  remoteId: string
+  deletedAt: Date
+}
+
+export interface Transaction extends SyncMeta {
   id?: number
   date: Date
   description: string
@@ -14,7 +30,7 @@ export interface Transaction {
   updatedAt: Date
 }
 
-export interface Category {
+export interface Category extends SyncMeta {
   id?: number
   name: string
   icon: string
@@ -27,7 +43,7 @@ export interface Category {
   sortOrder: number
 }
 
-export interface ImportBatch {
+export interface ImportBatch extends SyncMeta {
   id?: number
   filename: string
   bankFormat: BankFormat
@@ -37,14 +53,14 @@ export interface ImportBatch {
   importedAt: Date
 }
 
-export interface Budget {
+export interface Budget extends SyncMeta {
   id?: number
   categoryId: number
   monthlyLimit: number
   effectiveFrom: Date
 }
 
-export interface UserSettings {
+export interface UserSettings extends SyncMeta {
   id?: number
   currency: string
   dateFormat: string
@@ -91,7 +107,7 @@ export interface SpendingInsight {
   categoryId?: number
 }
 
-export interface Goal {
+export interface Goal extends SyncMeta {
   id?: number
   type: 'save' | 'spend_limit' | 'category_limit' | 'income_target'
   title: string
@@ -115,7 +131,7 @@ export type AssetType = 'cash' | 'offset' | 'shares' | 'super' | 'property' | 'c
 export type LiabilityType = 'mortgage' | 'hecs' | 'personal_loan' | 'car_loan' | 'credit_card' | 'other'
 export type LoanType = 'io' | 'p&i'
 
-export interface Asset {
+export interface Asset extends SyncMeta {
   id?: number
   name: string
   type: AssetType
@@ -125,7 +141,7 @@ export interface Asset {
   updatedAt: Date
 }
 
-export interface Liability {
+export interface Liability extends SyncMeta {
   id?: number
   name: string
   type: LiabilityType
@@ -137,7 +153,7 @@ export interface Liability {
   updatedAt: Date
 }
 
-export interface Property {
+export interface Property extends SyncMeta {
   id?: number
   nickname: string
   address?: string
@@ -154,7 +170,7 @@ export interface Property {
   notes?: string
 }
 
-export interface NetWorthSnapshot {
+export interface NetWorthSnapshot extends SyncMeta {
   id?: number
   date: Date             // stored as YYYY-MM-01 (first of month)
   totalAssets: number

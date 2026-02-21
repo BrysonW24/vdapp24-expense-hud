@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '@/db/database'
 import type { Transaction } from '@/types'
+import { bgSync, bgDelete } from '@/lib/syncHelpers'
 
 export function useTransactions(filters?: { categoryId?: number; search?: string; bankAccount?: string }) {
   return useLiveQuery(async () => {
@@ -24,17 +25,24 @@ export function useAllTransactions() {
 }
 
 export async function addTransaction(tx: Omit<Transaction, 'id'>): Promise<number> {
-  return db.transactions.add(tx as Transaction)
+  const id = await db.transactions.add({ ...tx, _syncStatus: 'pending', remoteId: null } as Transaction)
+  bgSync('transactions')
+  return id
 }
 
 export async function updateTransaction(id: number, changes: Partial<Transaction>): Promise<void> {
-  await db.transactions.update(id, { ...changes, updatedAt: new Date() })
+  await db.transactions.update(id, { ...changes, updatedAt: new Date(), _syncStatus: 'pending' })
+  bgSync('transactions')
 }
 
 export async function deleteTransaction(id: number): Promise<void> {
+  const record = await db.transactions.get(id)
   await db.transactions.delete(id)
+  bgDelete('transactions', record?.remoteId)
 }
 
 export async function bulkAddTransactions(txs: Omit<Transaction, 'id'>[]): Promise<void> {
-  await db.transactions.bulkAdd(txs as Transaction[])
+  const withSync = txs.map(tx => ({ ...tx, _syncStatus: 'pending' as const, remoteId: null }))
+  await db.transactions.bulkAdd(withSync as Transaction[])
+  bgSync('transactions')
 }

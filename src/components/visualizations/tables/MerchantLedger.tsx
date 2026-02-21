@@ -39,7 +39,7 @@ export function MerchantLedger() {
   return (
     <VizCard title="Expandable Merchant Ledger" description="Click a merchant to reveal analytics — seasonality, frequency, % of income">
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-xs min-w-[500px]">
           <thead>
             <tr className="text-slate-500 border-b border-slate-700/50">
               <th className="text-left py-2 pl-2 font-medium">Merchant</th>

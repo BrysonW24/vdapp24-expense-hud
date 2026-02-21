@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '@/db/database'
 import type { Category } from '@/types'
+import { bgSync, bgDelete } from '@/lib/syncHelpers'
 
 export function useCategories() {
   return useLiveQuery(async () => {
@@ -15,18 +16,24 @@ export function useCategoryMap() {
 }
 
 export async function addCategory(cat: Omit<Category, 'id'>): Promise<number> {
-  return db.categories.add(cat as Category)
+  const id = await db.categories.add({ ...cat, _syncStatus: 'pending', remoteId: null } as Category)
+  bgSync('categories')
+  return id
 }
 
 export async function updateCategory(id: number, changes: Partial<Category>): Promise<void> {
-  await db.categories.update(id, changes)
+  await db.categories.update(id, { ...changes, _syncStatus: 'pending' })
+  bgSync('categories')
 }
 
 export async function deleteCategory(id: number): Promise<void> {
+  const record = await db.categories.get(id)
   // Move transactions to Uncategorised first
   const uncategorised = await db.categories.where('name').equals('Uncategorised').first()
   if (uncategorised?.id) {
-    await db.transactions.where('categoryId').equals(id).modify({ categoryId: uncategorised.id })
+    await db.transactions.where('categoryId').equals(id).modify({ categoryId: uncategorised.id, _syncStatus: 'pending' })
+    bgSync('transactions')
   }
   await db.categories.delete(id)
+  bgDelete('categories', record?.remoteId)
 }

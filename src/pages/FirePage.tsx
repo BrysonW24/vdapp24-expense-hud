@@ -179,7 +179,7 @@ export function FirePage() {
       {/* Inputs */}
       <Card>
         <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">Your Numbers</p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Net Worth ($)</label>
             <input type="number" placeholder={String(Math.round(netWorth))} value={netWorthOverride}
@@ -207,7 +207,7 @@ export function FirePage() {
               className="w-full rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2.5 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-brand/30" />
           </div>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           <div>
             <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">Return rate: <strong>{returnRate}%</strong></label>
             <input type="range" min={3} max={12} step={0.5} value={returnRate} onChange={e => setReturnRate(parseFloat(e.target.value))} className="w-full accent-brand" />
@@ -228,8 +228,8 @@ export function FirePage() {
       </Card>
 
       {/* Progress rings */}
-      <div className="grid grid-cols-2 gap-4">
-        <Card className="flex items-center gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Card className="flex items-center gap-4 sm:gap-6">
           <RingProgress pct={pctToFire} size={110} color="#f97316" label="to FIRE" />
           <div>
             <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">FIRE Number</p>
@@ -241,7 +241,7 @@ export function FirePage() {
             )}
           </div>
         </Card>
-        <Card className="flex items-center gap-6">
+        <Card className="flex items-center gap-4 sm:gap-6">
           <RingProgress pct={pctToCoast} size={110} color="#8b5cf6" label="to Coast" />
           <div>
             <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Coast FIRE Number</p>

@@ -43,14 +43,14 @@ export function BottomNav() {
       )}
 
       {moreOpen && (
-        <div className="fixed bottom-[64px] left-0 right-0 z-50 lg:hidden bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-700 rounded-t-2xl shadow-2xl">
+        <div className="fixed bottom-[64px] left-0 right-0 z-50 lg:hidden bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-700 rounded-t-2xl shadow-2xl max-h-[calc(100vh-80px)] overflow-y-auto">
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-slate-700">
             <p className="font-semibold text-gray-800 dark:text-gray-200 text-sm">More</p>
             <button onClick={() => setMoreOpen(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
               <X size={18} />
             </button>
           </div>
-          <div className="grid grid-cols-3 gap-1 p-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 p-3">
             {MORE_ITEMS.map(({ to, icon: Icon, label }) => (
               <button key={to} onClick={() => handleMoreNav(to)}
                 className="flex flex-col items-center gap-1.5 py-4 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">

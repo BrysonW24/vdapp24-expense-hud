@@ -74,6 +74,8 @@ export interface MockProjection {
 export interface MockDailySpend {
   date: string
   amount: number
+  topMerchant?: string
+  topAmount?: number
 }
 
 export interface MockDNA {

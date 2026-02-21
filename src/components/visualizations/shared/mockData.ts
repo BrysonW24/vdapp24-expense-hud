@@ -140,6 +140,11 @@ export const MOCK_PROJECTIONS: MockProjection[] = Array.from({ length: 24 }, (_,
 }))
 
 // ─── Daily Spend (90 days, ECG data) ─────────────────────────
+const SPIKE_MERCHANTS = [
+  'JB Hi-Fi', 'IKEA', 'Apple Store', 'Flight Centre', 'Dan Murphy\'s',
+  'David Jones', 'Bunnings', 'Kmart', 'Officeworks', 'Myer',
+  'Harvey Norman', 'The Good Guys', 'Pet Barn', 'Rebel Sport',
+]
 export const MOCK_DAILY_SPEND: MockDailySpend[] = Array.from({ length: 90 }, (_, i) => {
   const d = new Date(2025, 6, 1)
   d.setDate(d.getDate() + i)
@@ -147,9 +152,14 @@ export const MOCK_DAILY_SPEND: MockDailySpend[] = Array.from({ length: 90 }, (_,
   const base = dayOfWeek === 0 || dayOfWeek === 6 ? 120 : 80
   const spike = Math.random() > 0.85 ? 150 + Math.random() * 300 : 0
   const amount = base + Math.random() * 60 + spike
+  const isSpike = spike > 0
   return {
     date: d.toISOString().slice(0, 10),
     amount: Math.round(amount * 100) / 100,
+    ...(isSpike ? {
+      topMerchant: SPIKE_MERCHANTS[i % SPIKE_MERCHANTS.length],
+      topAmount: Math.round(spike * 100) / 100,
+    } : {}),
   }
 })
 

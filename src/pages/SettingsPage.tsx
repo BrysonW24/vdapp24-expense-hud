@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Sun, Moon, Monitor, Download, Trash2, Database } from 'lucide-react'
+import { Sun, Moon, Monitor, Download, Trash2, Database, LogOut, User } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
+import { useAuth } from '@/hooks/useAuth'
 import { useAllTransactions } from '@/hooks/useTransactions'
 import { useCategories } from '@/hooks/useCategories'
 import { useImportBatches } from '@/hooks/useImportBatches'
@@ -12,6 +13,7 @@ import { clsx } from 'clsx'
 
 export function SettingsPage() {
   const { theme, setTheme } = useTheme()
+  const { user, signOut } = useAuth()
   const transactions = useAllTransactions()
   const categories = useCategories()
   const batches = useImportBatches()
@@ -60,13 +62,34 @@ export function SettingsPage() {
 
   return (
     <div className="space-y-4">
+      {/* Account */}
+      <Card>
+        <div className="flex items-center gap-2 mb-3">
+          <User size={16} className="text-brand" />
+          <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">Account</p>
+        </div>
+        {user ? (
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{user.email}</p>
+              <p className="text-xs text-gray-400">Signed in · data syncs to cloud</p>
+            </div>
+            <Button variant="ghost" size="sm" onClick={() => signOut()}>
+              <LogOut size={14} /> Sign Out
+            </Button>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500 dark:text-gray-400">Offline mode · data stored locally only</p>
+        )}
+      </Card>
+
       {/* Stats */}
       <Card>
         <div className="flex items-center gap-2 mb-3">
           <Database size={16} className="text-brand" />
           <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">Data Summary</p>
         </div>
-        <div className="grid grid-cols-3 gap-4 text-center">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
           <div>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{transactions.length}</p>
             <p className="text-xs text-gray-400">Transactions</p>
@@ -127,7 +150,7 @@ export function SettingsPage() {
       {/* About */}
       <div className="text-center py-4">
         <p className="text-xs text-gray-400">Expense HUD · vdapp24</p>
-        <p className="text-xs text-gray-300 dark:text-gray-600 mt-1">Built by Vivacity Digital · All data stored locally on your device</p>
+        <p className="text-xs text-gray-300 dark:text-gray-600 mt-1">Built by Vivacity Digital{user ? ' · Cloud sync enabled' : ' · All data stored locally on your device'}</p>
       </div>
     </div>
   )

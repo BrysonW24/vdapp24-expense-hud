@@ -133,7 +133,7 @@ function PropertyModal({ isOpen, onClose, initial, title, onSave }: {
           </div>
           <Input label="Offset Balance ($)" type="number" placeholder="50000" value={form.offsetBalance} onChange={f('offsetBalance')} />
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Input label="Weekly Rent ($)" type="number" placeholder="650" value={form.weeklyRent} onChange={f('weeklyRent')} />
           <Input label="Vacancy Rate (%)" type="number" placeholder="4" value={form.vacancyRate} onChange={f('vacancyRate')} />
           <Input label="Running Costs ($/mo)" type="number" placeholder="500" value={form.monthlyRunningCosts} onChange={f('monthlyRunningCosts')} />
@@ -199,7 +199,7 @@ export function PropertiesPage() {
 
       {/* Portfolio summary */}
       {properties.length > 0 && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Total Equity</p>
             <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">{formatCurrency(totalEquity)}</p>
@@ -278,7 +278,7 @@ export function PropertiesPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                 <div>
                   <p className="text-[10px] text-gray-400 uppercase tracking-wide">Value</p>
                   <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{formatCurrency(p.currentValue)}</p>

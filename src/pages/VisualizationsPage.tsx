@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import { Eye, Sparkles } from 'lucide-react'
 import { clsx } from 'clsx'
 
 // Spatial
@@ -114,6 +115,55 @@ export function VisualizationsPage() {
 
   return (
     <div className="space-y-6">
+      {/* Hero banner */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 lg:p-8">
+        {/* Decorative dots */}
+        <div className="absolute inset-0 opacity-20">
+          {Array.from({ length: 30 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 rounded-full bg-brand animate-pulse"
+              style={{
+                left: `${(i * 37) % 100}%`,
+                top: `${(i * 53) % 100}%`,
+                animationDelay: `${i * 0.15}s`,
+                animationDuration: `${2 + (i % 3)}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-8">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-lg bg-brand/20 flex items-center justify-center">
+                <Eye size={16} className="text-brand" />
+              </div>
+              <span className="text-xs font-semibold text-brand uppercase tracking-wider">Gallery</span>
+            </div>
+            <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
+              22 Interactive Visualizations
+            </h1>
+            <p className="text-sm text-gray-400 max-w-lg leading-relaxed">
+              Your finances brought to life — spatial cityscapes, heartbeat rhythms, mood maps, spending DNA, and more. Every chart is interactive and driven by your real data.
+            </p>
+          </div>
+
+          {/* Category pills */}
+          <div className="flex flex-wrap gap-2">
+            {SECTIONS.map(s => (
+              <button
+                key={s.id}
+                onClick={() => scrollTo(s.id)}
+                className="text-[11px] px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:bg-brand/20 hover:text-brand hover:border-brand/30 transition-colors"
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Sticky nav pills */}
       <div
         ref={navRef}

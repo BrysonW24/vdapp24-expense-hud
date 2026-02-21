@@ -1,5 +1,5 @@
 import Dexie, { type Table } from 'dexie'
-import type { Transaction, Category, ImportBatch, Budget, UserSettings, Goal, Asset, Liability, Property, NetWorthSnapshot } from '@/types'
+import type { Transaction, Category, ImportBatch, Budget, UserSettings, Goal, Asset, Liability, Property, NetWorthSnapshot, DeleteQueueEntry } from '@/types'
 import { defaultCategories, defaultSettings } from './seeds'
 
 export class ExpenseDatabase extends Dexie {
@@ -13,6 +13,7 @@ export class ExpenseDatabase extends Dexie {
   liabilities!: Table<Liability>
   properties!: Table<Property>
   netWorthSnapshots!: Table<NetWorthSnapshot>
+  _deleteQueue!: Table<DeleteQueueEntry>
 
   constructor() {
     super('expense-hud')
@@ -42,6 +43,29 @@ export class ExpenseDatabase extends Dexie {
       liabilities: '++id, type, updatedAt',
       properties: '++id',
       netWorthSnapshots: '++id, date',
+    })
+    this.version(5).stores({
+      transactions: '++id, date, categoryId, importBatchId, bankAccount, amount, remoteId, _syncStatus',
+      categories: '++id, type, name, remoteId, _syncStatus',
+      importBatches: '++id, importedAt, remoteId, _syncStatus',
+      budgets: '++id, categoryId, remoteId, _syncStatus',
+      settings: '++id, remoteId, _syncStatus',
+      goals: '++id, type, createdAt, remoteId, _syncStatus',
+      assets: '++id, type, updatedAt, remoteId, _syncStatus',
+      liabilities: '++id, type, updatedAt, remoteId, _syncStatus',
+      properties: '++id, remoteId, _syncStatus',
+      netWorthSnapshots: '++id, date, remoteId, _syncStatus',
+      _deleteQueue: '++id, tableName',
+    }).upgrade(tx => {
+      // Mark all existing records as pending sync
+      const tables = ['transactions', 'categories', 'importBatches', 'budgets', 'settings', 'goals', 'assets', 'liabilities', 'properties', 'netWorthSnapshots'] as const
+      return Promise.all(
+        tables.map(table =>
+          (tx as unknown as Record<string, Table>)[table]
+            .toCollection()
+            .modify({ _syncStatus: 'pending', remoteId: null })
+        )
+      )
     })
   }
 }
