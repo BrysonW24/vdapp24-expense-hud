@@ -42,10 +42,6 @@ function assetTypeLabel(t: AssetType) {
 function assetTypeColor(t: AssetType) {
   return ASSET_TYPES.find(x => x.value === t)?.color ?? '#6b7280'
 }
-function liabilityTypeLabel(t: LiabilityType) {
-  return LIABILITY_TYPES.find(x => x.value === t)?.label ?? t
-}
-
 interface AddAssetForm {
   name: string
   type: AssetType

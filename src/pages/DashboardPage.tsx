@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { TrendingUp, TrendingDown, Wallet, ArrowRight, Upload, Eye, PieChart as PieChartIcon, BarChart2, Flame, CreditCard, Layers, Sparkles, Target, Zap } from 'lucide-react'
+import { TrendingUp, TrendingDown, ArrowRight, Upload, Eye, PieChart as PieChartIcon, BarChart2, Flame, CreditCard, Layers, Sparkles, Target, Zap } from 'lucide-react'
 import { subMonths, isSameMonth } from 'date-fns'
 import { ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
 import { useAllTransactions } from '@/hooks/useTransactions'

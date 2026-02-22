@@ -25,17 +25,18 @@ export function ExpenseCity() {
     const innerW = width - margin.left - margin.right
     const innerH = height - margin.top - margin.bottom
 
-    d3.treemap<{ name: string }>()
+    type TreeNode = { name: string; children?: { name: string; value: number }[] }
+    d3.treemap<TreeNode>()
       .size([innerW, innerH])
       .padding(3)
-      .round(true)(root)
+      .round(true)(root as d3.HierarchyNode<TreeNode>)
 
     const color = d3.scaleOrdinal<string>().range(VIZ_COLORS.categories)
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`)
 
-    const leaves = root.leaves()
+    const leaves = root.leaves() as d3.HierarchyRectangularNode<TreeNode>[]
     leaves.forEach(leaf => {
-      const x0 = leaf.x0!, y0 = leaf.y0!, x1 = leaf.x1!, y1 = leaf.y1!
+      const x0 = leaf.x0, y0 = leaf.y0, x1 = leaf.x1, y1 = leaf.y1
       const w = x1 - x0
       const h = y1 - y0
       const name = (leaf.data as { name: string }).name

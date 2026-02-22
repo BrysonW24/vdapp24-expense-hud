@@ -10,7 +10,7 @@ export function TimeLapseReplay() {
   const svgRef = useRef<SVGSVGElement>(null)
   const [currentIdx, setCurrentIdx] = useState(0)
   const [playing, setPlaying] = useState(false)
-  const timerRef = useRef<ReturnType<typeof setInterval>>()
+  const timerRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined)
   const height = 350
 
   const play = useCallback(() => {

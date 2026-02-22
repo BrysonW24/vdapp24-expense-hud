@@ -2,7 +2,6 @@ import { useRef, useEffect } from 'react'
 import * as d3 from 'd3'
 import { useContainerSize } from '../shared/useContainerSize'
 import { VizCard } from '../shared/VizCard'
-import { VIZ_COLORS } from '../shared/theme'
 import { MOCK_MERCHANTS } from '../shared/mockData'
 
 interface MerchantNode extends d3.SimulationNodeDatum {

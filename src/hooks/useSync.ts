@@ -10,7 +10,7 @@ export function useSync() {
   const { user } = useAuth()
   const [syncState, setSyncState] = useState<SyncState>('idle')
   const [lastSynced, setLastSynced] = useState<Date | null>(null)
-  const intervalRef = useRef<ReturnType<typeof setInterval>>()
+  const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined)
 
   const runSync = useCallback(async () => {
     if (!user?.id) return

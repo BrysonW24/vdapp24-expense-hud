@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { Eye, Sparkles } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { clsx } from 'clsx'
 
 // Spatial

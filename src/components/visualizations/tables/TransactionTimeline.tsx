@@ -22,7 +22,6 @@ export function TransactionTimeline() {
     svg.selectAll('*').remove()
 
     const margin = { top: 15, right: 15, bottom: 15, left: 70 }
-    const innerW = width - margin.left - margin.right
 
     const maxAmount = d3.max(txns, t => t.amount)!
     const radiusScale = d3.scaleSqrt().domain([0, maxAmount]).range([3, 16])
