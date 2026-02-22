@@ -167,7 +167,7 @@ export function VisualizationsPage() {
       {/* Sticky nav pills */}
       <div
         ref={navRef}
-        className="sticky top-0 z-10 -mx-4 px-4 py-3 bg-gray-50/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-gray-100 dark:border-slate-800"
+        className="sticky top-[57px] z-10 -mx-4 px-4 py-3 bg-gray-50/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-gray-100 dark:border-slate-800"
       >
         <div className="flex gap-2 overflow-x-auto no-scrollbar">
           {SECTIONS.map(s => (

@@ -229,7 +229,7 @@ export function FirePage() {
 
       {/* Progress rings */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Card className="flex items-center gap-4 sm:gap-6">
+        <Card className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
           <RingProgress pct={pctToFire} size={110} color="#f97316" label="to FIRE" />
           <div>
             <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">FIRE Number</p>
@@ -241,7 +241,7 @@ export function FirePage() {
             )}
           </div>
         </Card>
-        <Card className="flex items-center gap-4 sm:gap-6">
+        <Card className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
           <RingProgress pct={pctToCoast} size={110} color="#8b5cf6" label="to Coast" />
           <div>
             <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Coast FIRE Number</p>

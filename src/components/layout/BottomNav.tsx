@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, List, Upload, TrendingUp, MoreHorizontal,
-  PieChart, Home, BarChart2, Flame, CreditCard, Layers, Settings, X, Eye
+  PieChart, Home, BarChart2, Flame, CreditCard, Layers, Settings, X, Eye, Tag
 } from 'lucide-react'
 import { clsx } from 'clsx'
 
@@ -21,6 +21,7 @@ const MORE_ITEMS = [
   { to: '/debt', icon: CreditCard, label: 'Debt' },
   { to: '/simulate', icon: Layers, label: 'Simulate' },
   { to: '/visualizations', icon: Eye, label: 'Visualizations' },
+  { to: '/categories', icon: Tag, label: 'Categories' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ]
 
@@ -78,7 +79,7 @@ export function BottomNav() {
               {({ isActive }) => (
                 <>
                   <Icon size={22} strokeWidth={isActive ? 2.5 : 1.5} />
-                  <span className="text-[10px] font-medium">{label}</span>
+                  <span className="text-[11px] font-medium">{label}</span>
                 </>
               )}
             </NavLink>
@@ -91,7 +92,7 @@ export function BottomNav() {
             )}
           >
             <MoreHorizontal size={22} strokeWidth={moreOpen ? 2.5 : 1.5} />
-            <span className="text-[10px] font-medium">More</span>
+            <span className="text-[11px] font-medium">More</span>
           </button>
         </div>
       </nav>

@@ -155,11 +155,11 @@ export function SimulatePage() {
   return (
     <div className="space-y-6">
       {/* Scenario picker */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="flex gap-3 overflow-x-auto pb-1 lg:grid lg:grid-cols-5 lg:overflow-visible lg:pb-0">
         {SCENARIOS.map(s => (
           <button key={s.type} onClick={() => setSelected(s.type)}
             className={clsx(
-              'p-3 rounded-xl text-left transition-all border',
+              'shrink-0 w-36 lg:w-auto p-3 rounded-xl text-left transition-all border',
               selected === s.type
                 ? 'bg-brand text-white border-brand'
                 : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 hover:border-brand hover:text-brand'

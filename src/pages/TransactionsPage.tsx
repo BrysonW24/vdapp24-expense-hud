@@ -83,7 +83,7 @@ export function TransactionsPage() {
       <div className="flex gap-2 overflow-x-auto pb-1">
         <button
           onClick={() => setSelectedCategory(null)}
-          className={clsx('px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0',
+          className={clsx('px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0',
             !selectedCategory ? 'bg-brand text-white' : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400'
           )}
         >All</button>
@@ -91,7 +91,7 @@ export function TransactionsPage() {
           <button
             key={cat.id}
             onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id!)}
-            className={clsx('px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0',
+            className={clsx('px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0',
               selectedCategory === cat.id ? 'text-white' : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400'
             )}
             style={selectedCategory === cat.id ? { backgroundColor: cat.color } : undefined}
@@ -157,9 +157,9 @@ export function TransactionsPage() {
                     <span className={clsx('text-sm font-semibold tabular-nums', tx.amount >= 0 ? 'amount-positive' : 'amount-negative')}>
                       {tx.amount >= 0 ? '+' : '-'}{formatCurrency(tx.amount)}
                     </span>
-                    <div className="hidden group-hover:flex gap-1">
-                      <button onClick={() => startEdit(tx)} className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-400"><Pencil size={13} /></button>
-                      <button onClick={() => handleDelete(tx.id!)} className="p-1 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-400 hover:text-red-500"><Trash2 size={13} /></button>
+                    <div className="flex gap-1 lg:hidden lg:group-hover:flex">
+                      <button onClick={() => startEdit(tx)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-400"><Pencil size={15} /></button>
+                      <button onClick={() => handleDelete(tx.id!)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-400 hover:text-red-500"><Trash2 size={15} /></button>
                     </div>
                   </div>
                 </div>
