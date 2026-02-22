@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, List, Upload, TrendingUp, Wallet,
-  PieChart, Home, BarChart2, Flame, CreditCard, Layers,
+  PieChart, Home, BarChart2, Flame, CreditCard, Layers, Tag,
   Cloud, CloudOff, Loader2, Sparkles
 } from 'lucide-react'
 import { clsx } from 'clsx'
@@ -31,6 +31,7 @@ const NAV_SECTIONS = [
       { to: '/transactions', icon: List, label: 'Transactions', exact: false },
       { to: '/import', icon: Upload, label: 'Import', exact: false },
       { to: '/insights', icon: TrendingUp, label: 'Insights', exact: false },
+      { to: '/categories', icon: Tag, label: 'Categories', exact: false },
     ],
   },
 ]

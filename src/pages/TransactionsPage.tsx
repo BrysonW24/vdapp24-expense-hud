@@ -157,7 +157,7 @@ export function TransactionsPage() {
                     <span className={clsx('text-sm font-semibold tabular-nums', tx.amount >= 0 ? 'amount-positive' : 'amount-negative')}>
                       {tx.amount >= 0 ? '+' : '-'}{formatCurrency(tx.amount)}
                     </span>
-                    <div className="flex gap-1 lg:hidden lg:group-hover:flex">
+                    <div className="flex gap-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                       <button onClick={() => startEdit(tx)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-400"><Pencil size={15} /></button>
                       <button onClick={() => handleDelete(tx.id!)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-400 hover:text-red-500"><Trash2 size={15} /></button>
                     </div>
