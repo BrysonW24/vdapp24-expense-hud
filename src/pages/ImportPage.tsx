@@ -20,6 +20,7 @@ const FORMAT_OPTIONS: { value: BankFormat; label: string; hint: string }[] = [
   { value: 'westpac', label: 'Westpac', hint: 'Westpac Live → Export → CSV' },
   { value: 'up', label: 'Up Bank', hint: 'Up app → Insights → Export CSV' },
   { value: 'ing', label: 'ING', hint: 'ING internet banking → My Account → Download transactions → CSV' },
+  { value: 'amex', label: 'Amex', hint: 'Amex online → Statements & Activity → Download → CSV · auto-detects credit card vs savings' },
   { value: 'generic', label: 'Generic', hint: 'Date, Amount, Description columns' },
 ]
 
@@ -49,6 +50,7 @@ export function ImportPage() {
       const result = parseCSV(text, manualFormat ?? undefined)
       setDetectedFormat(result.format)
       setParsedRows(result.rows)
+      if (result.accountLabel) setBankAccountName(result.accountLabel)
       if (result.rows.length > 0) {
         if (result.errors.length > 0) setParseWarnings(result.errors)
         const matches = categoriseAll(result.rows, categories)
@@ -264,7 +266,7 @@ export function ImportPage() {
           </div>
           <div className="text-center">
             <p className="font-semibold text-gray-900 dark:text-white">Drop your CSV file here</p>
-            <p className="text-sm text-gray-400 mt-1">or click to browse · CommBank, NAB, ANZ, Westpac supported</p>
+            <p className="text-sm text-gray-400 mt-1">or click to browse · CommBank, NAB, ANZ, Westpac, Amex supported</p>
           </div>
           <input type="file" accept=".csv" className="hidden" onChange={onFileInput} />
         </label>

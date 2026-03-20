@@ -68,7 +68,7 @@ export interface UserSettings extends SyncMeta {
   theme: 'light' | 'dark' | 'system'
 }
 
-export type BankFormat = 'commbank' | 'nab' | 'anz' | 'westpac' | 'up' | 'ing' | 'generic'
+export type BankFormat = 'commbank' | 'nab' | 'anz' | 'westpac' | 'up' | 'ing' | 'amex' | 'generic'
 
 export interface ParsedRow {
   date: Date
@@ -81,6 +81,7 @@ export interface ParseResult {
   rows: ParsedRow[]
   format: BankFormat
   errors: string[]
+  accountLabel?: string
 }
 
 export interface CategoryMatch {
